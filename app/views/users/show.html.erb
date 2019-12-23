@@ -1,0 +1,18 @@
+<h1><%= @user.name %>'s page</h1>
+
+<p>email: <%= @user.email %></p>
+
+<h2>Your invites (<%= @user.invites.count  %>)</h2>
+<% @user.invites.each do |invite| %>
+    <hr>
+    <p><%= invite.status %></p>
+<% end %>
+
+<h2>Your hosted events</h2>
+<% @user.events.each do |event| %>
+    <hr>
+    <p><%= event.title %></p>
+    <p><%= event.date %> - <%= event.location %></p>
+    <p><%= event.description %></p>
+<% end %>
+
