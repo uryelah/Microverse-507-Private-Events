@@ -1,0 +1,8 @@
+<nav>
+  <% if current_user %>
+    <span>Current User: <%= current_user.name %> - <span>
+    <span><%= link_to 'Sign-off', logout_path, method: :delete %><span>
+  <% else %>
+    <span><%= link_to 'Sign-in', login_path %><span>
+  <% end %>
+</nav>
