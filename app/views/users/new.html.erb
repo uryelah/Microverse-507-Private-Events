@@ -1,12 +1,16 @@
 <h1>Sign Up</h1>
-<p>Find me in app/views/users/new.html.erb</p>
 
-<% form_for :user do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+<%= form_for :user, url: '/users' do |f| %>
+  <fieldset>
+    <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    </div>
 
-  <%= f.label :email %>
-  <%= f.email_field :email %>
-
+    <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    </div>
+  </fieldset>
   <%= f.submit 'Sign in' %>
 <% end %>

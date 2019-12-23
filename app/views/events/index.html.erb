@@ -1,2 +1,10 @@
-<h1>Events#index</h1>
-<p>Find me in app/views/events/index.html.erb</p>
+<h1>All Events</h1>
+
+<% if @events.none? %>
+  <p>No events yet. <%= link_to 'Create the first one!', new_event_path %></p>
+<% else %>
+  <p>No events yet. <%= link_to 'Create a new event', new_event_path %></p>
+  <% @events.each do |event| %>
+      <p><%= link_to event.title.to_s + ' - ' + event.date.to_s, event_path(event) %></p>
+  <% end %>
+<% end %>

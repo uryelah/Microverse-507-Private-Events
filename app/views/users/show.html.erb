@@ -8,8 +8,14 @@
     <p><%= invite.status %></p>
 <% end %>
 
-<h2>Your hosted events</h2>
-<% @user.events.each do |event| %>
+<h2>Your attending events (<%= @user.invites.count  %>)</h2>
+<% @user.invites.each do |invite| %>
+    <hr>
+    <p><%= invite.status %></p>
+<% end %>
+
+<h2>Your hosted events (<%= @user.hosted_events.count  %>)</h2>
+<% @user.hosted_events.each do |event| %>
     <hr>
     <p><%= event.title %></p>
     <p><%= event.date %> - <%= event.location %></p>

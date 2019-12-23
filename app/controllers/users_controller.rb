@@ -4,17 +4,24 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(email: params[:email], name: params[:name])
+    @user = User.new(user_params)
 
     if @user.save
-      flash[:success] = "Success Sign Up"
+      flash[:success] = 'User successfully created'
       redirect_to @user
     else
-      flash.now[:error] = "There is a problem"
+      flash.now[:error] = 'Error saving new user :-('
+      render 'new'
     end
   end
 
   def show
     @user = User.find(params[:id])
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :email)
   end
 end
