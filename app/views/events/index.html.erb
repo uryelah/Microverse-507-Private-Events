@@ -6,7 +6,7 @@
   <p><%= link_to 'Create a new event', new_event_path %></p>
   <h2>Upcoming events(<%= @upcoming.count %>):</h2>
   <% @upcoming.each do |event| %>
-      <p><%= link_to event.title.to_s + ' - ' + event.date.to_s, event_path(event) %>
+      <p><%= link_to event.title.to_s + ' - ' + event.date.strftime("%d/%m/%Y"), event_path(event) %>
       <% if current_user.attended_event.exists?(event.id) && Invite.find_by(user_id: current_user.id, event_id: event.id).status == false %>
         <%= form_for :invites, url: "/invites/#{event.invites.find_by(user_id: current_user.id, event_id: event.id)&.id}", method: 'patch' do |f| %>
           <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
@@ -19,7 +19,7 @@
 
   <h2>Previous events(<%= @previous.count %>):</h2>
   <% @previous.each do |event| %>
-      <p><%= link_to event.title.to_s + ' - ' + event.date.to_s, event_path(event) %>
+      <p><%= link_to event.title.to_s + ' - ' + event.date.strftime("%d/%m/%Y"), event_path(event) %>
       </p>
   <% end %>
 <% end %>

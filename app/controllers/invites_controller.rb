@@ -12,7 +12,7 @@ class InvitesController < ApplicationController
   end
 
   def update
-    @invite = Invite.find_by(event_id: params[:invite][:event_id], user_id: params[:invite][:user_id])
+    @invite = Invite.find_invite(params[:invite][:user_id], params[:invite][:event_id], false)
     if @invite&.update(status: true)
       flash[:success] = 'You are now attending this event!'
       redirect_to event_path(params[:invite][:event_id])
