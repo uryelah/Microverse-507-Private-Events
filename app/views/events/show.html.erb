@@ -1,4 +1,13 @@
 <h1><%= @event.title %> - event page</h1>
+<% if @envited %>
+  <%= form_for :invites, url: "/invites/#{@event.invites.find_by(user_id: current_user.id, event_id: @event.id).id}", method: 'patch' do |f| %>
+    <%= f.hidden_field :event_id, value: @event.id, name: "invite[event_id]" %>
+    <%= f.hidden_field :user_id, value: current_user.id, name: "invite[user_id]" %>
+    <%= f.submit 'Confirm your presence' %>
+  <% end %>
+<% elsif @attending %>
+  <%= link_to 'Cancel presence', invite_path(@event.invites.find_by(user_id: current_user.id, event_id: @event.id).id), data: {:confirm => 'Are you sure?'}, :method => :delete %>
+<% end %>
 <% if @host == current_user %>
   <%= form_for :invites, url: '/invites' do |f| %>
     <%= f.hidden_field :event_id, value: @event.id, name: "invite[event_id]" %>
@@ -7,7 +16,7 @@
           <option value=<%=user.id%>><%=user.name%></option>
         <% end %>
       </select>
-      <%= f.submit 'Envite user to Event' %>
+    <%= f.submit 'Envite user to Event' %>
     <% end %>
 <% else %>
   <p>Hosted by: <%= link_to @host.name, user_path(@host) %></p>
