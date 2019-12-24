@@ -1,6 +1,39 @@
 <h1><%= @event.title %> - event page</h1>
-<p>Hosted by: <%= link_to @host.name, user_path(@host) %></p>
+<% if @host == current_user %>
+  <%= form_for :invites, url: '/invites' do |f| %>
+    <%= f.hidden_field :event_id, value: @event.id, name: "invite[event_id]" %>
+      <select name='invite[user_id]'>
+        <% @users.each do |user| %>
+          <option value=<%=user.id%>><%=user.name%></option>
+        <% end %>
+      </select>
+      <%= f.submit 'Envite user to Event' %>
+    <% end %>
+<% else %>
+  <p>Hosted by: <%= link_to @host.name, user_path(@host) %></p>
+<% end %>
 <p><%= @event.description %></p>
 <p>Location: <%= @event.location %></p>
 <p>Date: <%= @event.date %></p>
+
+<% if @event.date < Time.current %>
+  <h2><%= pluralize(@confirmed_attendees.count, 'users attended this event:') %></h2>
+  <% @confirmed_attendees.each do |attendee| %>
+    <hr>
+  <p><%= link_to attendee.name, user_path(attendee) %></p>
+  <% end %>
+<% else %>
+  <h2>Attending users(<%= @confirmed_attendees.count  %>)</h2>
+  <% @confirmed_attendees.each do |attendee| %>
+    <hr>
+    <p><%= link_to attendee.name, user_path(attendee) %></p>
+  <% end %>
+
+<h2>Invited users(<%= @invited_attendees.count  %>)</h2>
+  <% @invited_attendees.each do |attendee| %>
+    <hr>
+    <p><%= link_to attendee.name, user_path(attendee) %></p>
+  <% end %>
+<% end %>
+
 <%= link_to 'Back', events_path %>

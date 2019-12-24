@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @current_user = User.first
+    @current_user = current_user
     @event = @current_user.hosted_events.build(event_params)
 
     if @event.save
@@ -17,12 +17,18 @@ class EventsController < ApplicationController
   end
 
   def show
+    @users = User.where('id != ?', current_user.id)
     @event = Event.find(params[:id])
     @host = User.find(@event.creator_id)
+    @event.invites.delete_expired
+    @confirmed_attendees = User.joins(:invites).where(invites: { status: true, event_id: @event.id })
+    @invited_attendees = User.joins(:invites).where(invites: { status: false, event_id: @event.id })
   end
 
   def index
     @events = Event.all
+    @upcoming = Event.upcoming_events
+    @previous = Event.prev_events
   end
 
   private

@@ -1,8 +1,10 @@
 <nav>
   <% if current_user %>
-    <span>Current User: <%= current_user.name %> - <span>
+    <span>Current User: <%= link_to current_user.name, user_path(current_user) %> - <span>
     <span><%= link_to 'Sign-off', logout_path, method: :delete %><span>
   <% else %>
     <span><%= link_to 'Sign-in', login_path %><span>
   <% end %>
+    <span><%= link_to 'All Events', events_path %></span> -
+    <span><%= link_to 'All Users', users_path %></span>
 </nav>

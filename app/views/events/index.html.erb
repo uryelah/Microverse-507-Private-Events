@@ -1,10 +1,16 @@
 <h1>All Events</h1>
 
-<% if @events.none? %>
+<% if @upcoming.none? && @previous.none? %>
   <p>No events yet. <%= link_to 'Create the first one!', new_event_path %></p>
 <% else %>
   <p>No events yet. <%= link_to 'Create a new event', new_event_path %></p>
-  <% @events.each do |event| %>
+  <h2>Upcoming events(<%= @upcoming.count %>):</h2>
+  <% @upcoming.each do |event| %>
+      <p><%= link_to event.title.to_s + ' - ' + event.date.to_s, event_path(event) %></p>
+  <% end %>
+
+  <h2>Previous events(<%= @previous.count %>):</h2>
+  <% @previous.each do |event| %>
       <p><%= link_to event.title.to_s + ' - ' + event.date.to_s, event_path(event) %></p>
   <% end %>
 <% end %>

@@ -1,0 +1,15 @@
+<h1>User List</h1>
+
+<% @users.each do |user| %>
+  <% next if user == current_user %>
+  <p><%= link_to user.name, user_path(user) %></p>
+    <%= form_for :invites, url: '/invites' do |f| %>
+      <%= f.hidden_field :user_id, value: user.id, name: "invite[user_id]" %>
+      <select name='invite[event_id]'>
+        <% @c_u_events.each do |event| %>
+          <option value=<%=event.id%>><%=event.title%></option>
+        <% end %>
+      </select>
+      <%= f.submit 'Envite user to Event' %>
+    <% end %>
+<% end %>

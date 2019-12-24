@@ -2,11 +2,11 @@
 
 <%= form_for :session, url: login_path do |f| %>
   <fieldset>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-
     <%= f.label :name %>
     <%= f.text_field :name %>
+
+    <%= f.label :email %>
+    <%= f.email_field :email %>
   </fieldset>
 
   <%= f.submit 'Sign in' %>

@@ -1,17 +1,29 @@
 <h1><%= @user.name %>'s page</h1>
-
+  <%= form_for :invites, url: '/invites' do |f| %>
+    <%= f.hidden_field :user_id, value: @user.id, name: "invite[user_id]" %>
+    <select name='invite[event_id]'>
+      <% current_user.hosted_events.each do |event| %>
+        <option value=<%=event.id%>><%=event.title%></option>
+      <% end %>
+    </select>
+    <%= f.submit 'Envite user to Event' %>
+  <% end %>
 <p>email: <%= @user.email %></p>
 
-<h2>Your invites (<%= @user.invites.count  %>)</h2>
-<% @user.invites.each do |invite| %>
+<h2>Your invites (<%= @invited.count  %>)</h2>
+<% @invited.each do |event| %>
     <hr>
-    <p><%= invite.status %></p>
+    <p><%= event.title %></p>
+    <p><%= event.date %> - <%= event.location %></p>
+    <p><%= event.description %></p>
 <% end %>
 
-<h2>Your attending events (<%= @user.invites.count  %>)</h2>
-<% @user.invites.each do |invite| %>
+<h2>Your attending events (<%= @attending.count  %>)</h2>
+<% @attending.each do |event| %>
     <hr>
-    <p><%= invite.status %></p>
+    <p><%= event.title %></p>
+    <p><%= event.date %> - <%= event.location %></p>
+    <p><%= event.description %></p>
 <% end %>
 
 <h2>Your hosted events (<%= @user.hosted_events.count  %>)</h2>
@@ -20,5 +32,25 @@
     <p><%= event.title %></p>
     <p><%= event.date %> - <%= event.location %></p>
     <p><%= event.description %></p>
+    <% if @user == current_user %>
+      <%= form_for :invites, url: '/invites' do |f| %>
+        <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
+        <select name='invite[user_id]'>
+          <% @users.each do |user| %>
+            <option value=<%=user.id%>><%=user.name%></option>
+          <% end %>
+        </select>
+        <%= f.submit 'Envite user to Event' %>
+      <% end %>
+    <% end %>
 <% end %>
 
+<h2>You've attended (<%= @attended.count  %>) events so far!</h2>
+<% @attended.each do |event| %>
+    <hr>
+    <p><%= event.title %></p>
+    <p><%= event.date %> - <%= event.location %></p>
+    <p><%= event.description %></p>
+<% end %>
+
+<%= link_to 'Back', events_path %>
