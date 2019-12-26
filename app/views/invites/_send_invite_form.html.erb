@@ -1,0 +1,6 @@
+<% if type == 'users' && users %>
+  <%= user_form(users, event) %>
+<% elsif type == 'events' %>
+  <%= event_form(events, user) %>
+<% end %>
+<span id="formAlert"></span>

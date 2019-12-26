@@ -10,16 +10,26 @@ This is the first project of the Ruby on Rails section of the Microverse course	
   <h3 align="center">Private Events</h3>
 
   <p align="center">
-In this project we built the models, validations and assiciations to simulate the back of a site similar to a simple version of Reddit, without child comments. Check in the Rails console to play around with models without the overhead of making HTTP requests and involving controllers or views. <br />
+This is an events site project, similar to Eventbrite, done with ruby on rails which allows users to create events, send invites to their hosted or attending events and confirm their presence for the events they were invited to. 
+- Sign up and login to access the events, invites and users routes.
+- Create an event and send invites to other users
+- Receive and accept an invite to an event to be able to attend it and send invites for it
+- Cancel your attendance to an event to destroy your invitation
+- An event envite cannot be sent to it's creator
+- An user cannot send an invite to an event held past the current time
+
+<br />
   </p>
 </p>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-To do this course, you’ve got to have Rails and several other technologies properly installed on your computer. That will be the first task if you haven’t already.
+From the [Odin Project](https://www.theodinproject.com/courses/ruby-on-rails/lessons/associations): 
+You want to build a site similar to a private Eventbrite which allows users to create events and then manage user signups. Users can create events and send invitations and parties (sound familiar?). Events take place at a specific date and at a location (which you can just store as a string, like “Andy’s House”).
 
-Next comes the Jumpstart Lab Blogger Tutorial (which was assigned way back in the Web Development 101 course). The Blogger tutorial is actually more challenging than the project below, and was assigned to give you a chance to get in over your head a bit so you’d pay attention along the way :)
+A user can create events. A user can attend many events. An event can be attended by many users. This will require you to model many-to-many relationships and also to be very conscious about your foreign keys and class names (hint: you won’t be able to just rely on Rails’ defaults like you have before).
+
 ### Built With
 This progam was made using this technologies
 
@@ -68,7 +78,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 * Jair Jaramillo: [Github](https://github.com/jairjy), [Twitter](https://twitter.com/jairjy)
 
-Project Link: [Micro Reddit](https://github.com/jairjy/Microverse-504-Micro-Reddit/tree/micro-reddit)
+Project Link: [Private Events](https://github.com/jairjy/Microverse-504-Micro-Reddit/tree/micro-reddit)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements

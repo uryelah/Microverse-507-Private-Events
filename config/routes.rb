@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   resources  :invites, only: [:create, :update, :destroy]
   resources  :users, only: [:new, :create, :show, :index]
   resources  :events, only: [:new, :create, :show, :index]
+
+  root to: 'users#new'
 end

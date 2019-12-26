@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class InvitesController < ApplicationController
+  before_action :logged?
+
   def create
     @invite = Invite.new(invite_params)
 
@@ -6,7 +10,7 @@ class InvitesController < ApplicationController
       flash[:success] = 'Invite successfully sent'
       redirect_to event_path(Event.find(params[:invite][:event_id]))
     else
-      flash[:error] = 'Error sending invite :-('
+      flash[:error] = 'This user was already invited'
       redirect_to request.referer
     end
   end
@@ -34,6 +38,10 @@ class InvitesController < ApplicationController
   end
 
   private
+
+  def logged?
+    redirect_to login_path unless current_user
+  end
 
   def invite_params
     params.require(:invite).permit(:user_id, :event_id)

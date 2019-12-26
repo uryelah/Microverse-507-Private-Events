@@ -3,11 +3,12 @@
 <% if @upcoming.none? && @previous.none? %>
   <p>No events yet. <%= link_to 'Create the first one!', new_event_path %></p>
 <% else %>
-  <p><%= link_to 'Create a new event', new_event_path %></p>
+  <p class='create'><%= link_to 'Create a new event', new_event_path %></p>
   <h2>Upcoming events(<%= @upcoming.count %>):</h2>
   <% @upcoming.each do |event| %>
+      <hr>
       <p><%= link_to event.title.to_s + ' - ' + event.date.strftime("%d/%m/%Y"), event_path(event) %>
-      <% if current_user.attended_event.exists?(event.id) && Invite.find_by(user_id: current_user.id, event_id: event.id).status == false %>
+      <% if Invite.find_invite(current_user.id, event.id, false) %>
         <%= form_for :invites, url: "/invites/#{event.invites.find_by(user_id: current_user.id, event_id: event.id)&.id}", method: 'patch' do |f| %>
           <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
           <%= f.hidden_field :user_id, value: current_user.id, name: "invite[user_id]" %>
@@ -19,6 +20,7 @@
 
   <h2>Previous events(<%= @previous.count %>):</h2>
   <% @previous.each do |event| %>
+      <hr>
       <p><%= link_to event.title.to_s + ' - ' + event.date.strftime("%d/%m/%Y"), event_path(event) %>
       </p>
   <% end %>

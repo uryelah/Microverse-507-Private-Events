@@ -1,18 +1,13 @@
-<h1><%= @user.name %>'s page</h1>
-  <% if current_user != @user %>
-  <%= form_for :invites, url: '/invites' do |f| %>
-    <%= f.hidden_field :user_id, value: @user.id, name: "invite[user_id]" %>
-    <select name='invite[event_id]'>
-      <% current_user.hosted_events.each do |event| %>
-        <option value=<%=event.id%>><%=event.title%></option>
-      <% end %>
-    </select>
-    <%= f.submit 'Envite user to Event' %>
-  <% end %>
-  <% end %>
+<% if current_user != @user %>
+  <h1><%= @user.name %>'s page</h1>
+  <%= render 'invites/send_invite_form', type: 'events', user: @user, events: current_user.hosted_events%>
+<% else %>
+  <h1>My page</h1>
+<% end %>
 <p>email: <%= @user.email %></p>
 
-<h2>Your invites (<%= invited_to(@user).count  %>)</h2>
+<section class="invites">
+<h2>Invites (<%= invited_to(@user).count  %>)</h2>
 <% invited_to(@user).each do |event| %>
     <hr>
     <p><%= link_to event.title, event_path(event) %></p>
@@ -26,8 +21,9 @@
     <% end %>
   <% end %>
 <% end %>
+</section>
 
-<h2>Your attending events (<%= attending_to(@user).count  %>)</h2>
+<h2>Attending events (<%= attending_to(@user).count  %>)</h2>
 <% attending_to(@user).each do |event| %>
     <hr>
     <p><%= link_to event.title, event_path(event) %></p>
@@ -35,26 +31,18 @@
     <p><%= event.description %></p>
 <% end %>
 
-<h2>Your hosted events (<%= @user.hosted_events.count  %>)</h2>
+<h2>Hosted events (<%= @user.hosted_events.count  %>)</h2>
 <% @user.hosted_events.each do |event| %>
     <hr>
     <p><%= link_to event.title, event_path(event) %></p>
     <p><%= event.date&.strftime("%d/%m/%Y") %> - <%= event.location %></p>
     <p><%= event.description %></p>
     <% if @user == current_user %>
-      <%= form_for :invites, url: '/invites' do |f| %>
-        <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
-        <select name='invite[user_id]'>
-          <% @users.each do |user| %>
-            <option value=<%=user.id%>><%=user.name%></option>
-          <% end %>
-        </select>
-        <%= f.submit 'Envite user to Event' %>
-      <% end %>
+      <%= render 'invites/send_invite_form', type: 'users', users: invitable_users(@user, event.creator), event: event%>
     <% end %>
 <% end %>
 
-<h2>You've attended (<%= attended_to(@user).count  %>) events so far!</h2>
+<h2>Past attended events (<%= attended_to(@user).count  %>)</h2>
 <% attended_to(@user).each do |event| %>
     <hr>
     <p><%= link_to event.title, event_path(event) %></p>

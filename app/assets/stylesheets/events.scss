@@ -4,3 +4,18 @@
 label {
     display: block;
 }
+
+.create a {
+    box-sizing: border-box;
+    border: 2px solid pink;
+    width: max-content;
+    margin: 0 auto;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #c3c3c3;
+    border: 2px solid #c3c3c3;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.25rem;
+    transition: 0.3s ease-in;
+}

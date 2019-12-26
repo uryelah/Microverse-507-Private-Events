@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   def sign_in(user)
     cookies.permanent[:signed_user] = user.id

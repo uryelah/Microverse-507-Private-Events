@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
+  before_action :logged?
+
   def new
     @event = Event.new
   end
@@ -17,8 +21,8 @@ class EventsController < ApplicationController
   end
 
   def show
-    @users = User.all_but(current_user.id)
     @event = Event.find(params[:id])
+    @users = any_invitables(current_user, @event.creator)
     @host = User.find(@event.creator_id)
     @event.invites.delete_expired
   end
@@ -31,7 +35,15 @@ class EventsController < ApplicationController
 
   private
 
+  def logged?
+    redirect_to login_path unless current_user
+  end
+
   def event_params
     params.require(:event).permit(:title, :description, :date, :location)
+  end
+
+  def any_invitables(current_user, event_creator)
+    User.all_but(current_user, event_creator)
   end
 end

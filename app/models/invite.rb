@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 class Invite < ApplicationRecord
   belongs_to :user
   belongs_to :event
 
-  before_create :check_invite_exists
+  before_create :check_invite_exists, :check_if_self_invite
+
+  validate :event_is_upcoming
 
   # scopes
   scope :ivt_status, ->(bool) { where('status = ?', bool) }
@@ -22,5 +26,13 @@ class Invite < ApplicationRecord
   def check_invite_exists
     @invite = Invite.find_by(user_id: user_id, event_id: event_id)
     throw :abort if @invite
+  end
+
+  def check_if_self_invite
+    throw :abort if Event.find(event_id).creator.id == user_id
+  end
+
+  def event_is_upcoming
+    errors.add(:date, 'Cannot send envite to expired event') if event.date < Time.current
   end
 end

@@ -8,16 +8,8 @@
 <% elsif current_user_attending?(@event) %>
   <%= link_to 'Cancel presence', invite_path(@event.invites.find_by(user_id: current_user.id, event_id: @event.id).id), data: {:confirm => 'Are you sure?'}, :method => :delete %>
 <% end %>
-<% if @host == current_user %>
-  <%= form_for :invites, url: '/invites' do |f| %>
-    <%= f.hidden_field :event_id, value: @event.id, name: "invite[event_id]" %>
-      <select name='invite[user_id]'>
-        <% @users.each do |user| %>
-          <option value=<%=user.id%>><%=user.name%></option>
-        <% end %>
-      </select>
-    <%= f.submit 'Envite user to Event' %>
-    <% end %>
+<% if @host == current_user || current_user_attending?(@event) %>
+  <%= render 'invites/send_invite_form', type: 'users', users: @users, event: @event%>
 <% else %>
   <p>Hosted by: <%= link_to @host.name, user_path(@host) %></p>
 <% end %>
@@ -27,7 +19,7 @@
 
 <% if @event.date&. < Time.current %>
   <h2><%= pluralize(confirmed_attendees(@event).count, 'users attended this event') %>:</h2>
-  <% confirmed_attendees(event).each do |attendee| %>
+  <% confirmed_attendees(@event).each do |attendee| %>
     <hr>
   <p><%= link_to attendee.name, user_path(attendee) %></p>
   <% end %>

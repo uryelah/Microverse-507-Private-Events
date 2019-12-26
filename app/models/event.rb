@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event < ApplicationRecord
   belongs_to :creator, class_name: 'User'
   has_many :invites, dependent: :destroy
@@ -15,10 +17,10 @@ class Event < ApplicationRecord
 
   # class methods
   def self.upcoming_events
-    Event.all.future(Time.current)
+    Event.all.future(Time.current).order(date: :asc)
   end
 
   def self.prev_events
-    all.past(Time.current)
+    all.past(Time.current).order(date: :desc)
   end
 end

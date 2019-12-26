@@ -1,6 +1,6 @@
 <h1>Login</h1>
 
-<%= form_for :session, url: login_path do |f| %>
+<%= form_for :session, html: { class: 'auth-form' }, url: login_path do |f| %>
   <fieldset>
     <%= f.label :name %>
     <%= f.text_field :name %>

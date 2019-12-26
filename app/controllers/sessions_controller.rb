@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     @user = User.find_by(session_params)
@@ -24,5 +25,11 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:name, :email)
+  end
+
+  def require_login
+    return if current_user
+
+    redirect_to login_url
   end
 end

@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
+  before_action :logged?, only: [:show]
+
   def new
     @user = User.new
   end
@@ -17,7 +21,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @users = User.all_but(@user.id)
     @user.invites.delete_expired
   end
 
@@ -27,6 +30,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def logged?
+    redirect_to login_path unless current_user
+  end
 
   def user_params
     params.require(:user).permit(:name, :email)
