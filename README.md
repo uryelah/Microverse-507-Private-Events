@@ -11,12 +11,12 @@ This is the first project of the Ruby on Rails section of the Microverse course	
 
   <p align="center">
 This is an events site project, similar to Eventbrite, done with ruby on rails which allows users to create events, send invites to their hosted or attending events and confirm their presence for the events they were invited to. 
-- Sign up and login to access the events, invites and users routes.
+- Sign up and log in to access the events, invites and users routes.
 - Create an event and send invites to other users
 - Receive and accept an invite to an event to be able to attend it and send invites for it
 - Cancel your attendance to an event to destroy your invitation
-- An event envite cannot be sent to it's creator
-- An user cannot send an invite to an event held past the current time
+- An event invite cannot be sent to its creator
+- A user cannot send an invite to an event held past the current time
 
 <br />
   </p>
