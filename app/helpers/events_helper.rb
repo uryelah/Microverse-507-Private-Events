@@ -5,13 +5,12 @@ module EventsHelper
     content_tag :div do
       events.collect.with_index do |event, i|
         concat(content_tag(:hr) +
-          content_tag(:p, (link_to event.title.to_s + ' - ' + event.date.strftime("%d/%m/%Y"), event_path(event))) + 
+          content_tag(:p, (link_to event.title.to_s + ' - ' + event.date.strftime('%d/%m/%Y'), event_path(event))) +
           if invites_status && invites_status[i]
-            render "invites/confirm_invite_form", event: event
+            render 'invites/confirm_invite_form', event: event
           else
             ''
-          end
-          )
+          end)
       end
     end
   end
@@ -24,21 +23,37 @@ module EventsHelper
     end
   end
 
-  def confirmed_attendees(event)
-    User.confirmed_users(event)
+  def confirm_or_cancel_presence(present_event, invited = nil, attending = nil)
+    if invited
+      render 'invites/confirm_invite_form', event: present_event
+    elsif attending
+      link_to 'Cancel presence', invite_path(present_event.invites.find_by(user_id: current_user.id, event_id: present_event.id).id), data: {:confirm => 'Are you sure?'}, :method => :delete
+    end
   end
 
-  def invited_attendees(event)
-    User.invited(event)
+  def invite_if_attending(event, host, attending = nil, users)
+    return unless host == current_user || attending
+
+    render 'invites/send_invite_form', type: 'users', users: users, event: event
   end
 
-  def current_user_attending?(event)
-    current_user.attended_event.exists?(event.id) &&
-      Invite.find_invite(current_user.id, event.id, true)
+  def event_attendees(event, confirmed_attendees, invited_attendees)
+    if event.date&. < Time.current
+      content_tag(:h2, pluralize(confirmed_attendees.count, 'users') + ' attended this event') +
+        attendee_list(confirmed_attendees)
+    else
+      content_tag(:h2, 'Attending users(' + confirmed_attendees.count.to_s + ')') +
+        attendee_list(confirmed_attendees) +
+        content_tag(:h2, 'Invited users(' + invited_attendees.count.to_s + ')') +
+        attendee_list(invited_attendees)
+    end
   end
 
-  def current_user_invited?(event)
-    current_user.attended_event.exists?(event.id) &&
-      Invite.find_invite(current_user.id, event.id, false)
+  def attendee_list(users)
+    content_tag :div do
+      users.collect do |user|
+        concat(content_tag(:hr) + content_tag(:p, (link_to user.name, user_path(user))))
+      end
+    end
   end
 end

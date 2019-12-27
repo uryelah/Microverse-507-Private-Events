@@ -1,4 +1,5 @@
 <%= form_for :invites, url: "/invites/#{event.invites.find_by(user_id: current_user.id, event_id: event.id)&.id}", method: 'patch' do |f| %>
+  <%= f.hidden_field :method, name: "_method", value: "patch" %>
   <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
   <%= f.hidden_field :user_id, value: current_user.id, name: "invite[user_id]" %>
   <%= f.submit 'Confirm your presence' %>

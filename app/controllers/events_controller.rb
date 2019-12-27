@@ -25,6 +25,12 @@ class EventsController < ApplicationController
     @users = any_invitables(current_user, @event.creator)
     @host = User.find(@event.creator_id)
     @event.invites.delete_expired
+    @confirmed_attendees = User.confirmed_users(@event)
+    @invited_attendees = User.invited(@event)
+    @current_user_invited = current_user.attended_event.exists?(@event.id) &&
+                            Invite.find_invite(current_user.id, @event.id, false)
+    @current_user_attending = current_user.attended_event.exists?(@event.id) &&
+                              Invite.find_invite(current_user.id, @event.id, true)
   end
 
   def index
