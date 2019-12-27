@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/StringLiterals
+# rubocop:disable Style/StringLiterals, Rails/OutputSafety
 module InvitesHelper
   def user_form(users, event)
     form_start = '<form action="/invites" method="POST" accept-charset="UTF-8">'
@@ -46,5 +46,33 @@ module InvitesHelper
     end
     (form_start + token + hidden + select_start + options.join(',') + select_end + submit + form_end).html_safe # rubocop:disable Rails/OutputSafety
   end
+
+  def user_invites(user, events, is_current_user, invites)
+    content_tag :div do
+      events.collect.with_index do |event, i|
+        concat(content_tag(:p, (link_to event.title, event_path(event))) +
+        content_tag(:p, "#{event.date.strftime('%d/%m/%Y')} - #{event.location}") +
+        content_tag(:p, event.description) +
+        if is_current_user
+          form_for :invites do |f|
+            f.submit 'submits form bellow, only works with both for some reason'
+          end
+          "<form action='/invites/#{invites[i]}' accept-charset=\"UTF-8\" method=\"post\">
+          <input type=\"hidden\" name=\"_method\" value=\"PATCH\">
+            <input type=\"hidden\" name=\"authenticity_token\"
+            value=\"uiIklTGTY8/kKdSinTxsV+AgP2GxGM7cahNHO/3lM6VNQEG72XdcHQsUQWz/QbUQej5Wh9E7HpC/SJZrdOtarw==\">
+          <input value=\"#{event.id}\" name=\"invite[event_id]\" type=\"hidden\" id=\"invites_event_id\">
+          <input value=\"#{user.id}\" name=\"invite[user_id]\" type=\"hidden\" id=\"invites_user_id\">
+          <input type=\"submit\" name=\"commit\" value=\"Confirm your presence\"
+            data-disable-with=\"Confirm your presence\">
+          </form>".html_safe
+        else
+          ''
+        end +
+        content_tag(:hr))
+      end
+    end
+  end
 end
-# rubocop:enable Style/StringLiterals
+
+# rubocop:enable Style/StringLiterals, Rails/OutputSafety

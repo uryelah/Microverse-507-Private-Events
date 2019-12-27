@@ -23,4 +23,16 @@ class Event < ApplicationRecord
   def self.prev_events
     all.past(Time.current).order(date: :desc)
   end
+
+  def self.attending_to(user)
+    Event.upcoming_events.my_ivt_status(true, user)
+  end
+
+  def self.invited_to(user)
+    Event.upcoming_events.my_ivt_status(false, user)
+  end
+
+  def self.attended_to(user)
+    Event.prev_events.my_ivt_status(true, user)
+  end
 end

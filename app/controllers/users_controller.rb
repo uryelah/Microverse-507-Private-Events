@@ -21,7 +21,14 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @hosted_events = @user.hosted_events
     @user.invites.delete_expired
+    @attending_to = Event.attending_to(@user)
+    @invited_to = Event.invited_to(@user)
+    @attended_to = Event.attended_to(@user)
+    @is_current_user = current_user?(@user)
+    @invites = Invite.find_invite_id(current_user, @invited_to)
+    @invitables = invitables(@hosted_events)
   end
 
   def index
@@ -37,5 +44,21 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email)
+  end
+
+  def invitables(events)
+    invitable_arr = []
+    events.each do |event|
+      invitable_arr << invitable_users(current_user, event.creator)
+    end
+    invitable_arr
+  end
+
+  def invitable_users(user, host)
+    User.all_but(user, host)
+  end
+
+  def current_user?(user)
+    User.find(cookies[:signed_user])&. == user
   end
 end

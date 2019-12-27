@@ -21,6 +21,14 @@ class Invite < ApplicationRecord
     Invite.find_by(user_id: user_id, event_id: event_id, status: status)
   end
 
+  def self.find_invite_id(user_id, events)
+    id_arr = []
+    events.each do |event|
+      id_arr << event.invites.find_by(user_id: user_id, event_id: event.id).id
+    end
+    id_arr
+  end
+  
   private
 
   def check_invite_exists

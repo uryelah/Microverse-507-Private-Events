@@ -8,7 +8,6 @@ This is the first project of the Ruby on Rails section of the Microverse course	
   </a>
 
   <h3 align="center">Private Events</h3>
-
   <p align="center">
 This is an events site project, similar to Eventbrite, done with ruby on rails which allows users to create events, send invites to their hosted or attending events and confirm their presence for the events they were invited to. 
 - Sign up and log in to access the events, invites and users routes.

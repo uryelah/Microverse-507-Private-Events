@@ -1,49 +1,22 @@
-<% if current_user != @user %>
-  <h1><%= @user.name %>'s page</h1>
-  <%= render 'invites/send_invite_form', type: 'events', user: @user, events: current_user.hosted_events%>
-<% else %>
-  <h1>My page</h1>
-<% end %>
+<h1><%= user_header(@user) %></h1>
+<%= user_invite_form(@user) %>
+
 <p>email: <%= @user.email %></p>
 
-<section class="invites">
-<h2>Invites (<%= invited_to(@user).count  %>)</h2>
-<% invited_to(@user).each do |event| %>
-    <hr>
-    <p><%= link_to event.title, event_path(event) %></p>
-    <p><%= event.date.strftime("%d/%m/%Y") %> - <%= event.location %></p>
-    <p><%= event.description %></p>
-    <% if current_user == @user%>
-      <%= form_for :invites, url: "/invites/#{event.invites.find_by(user_id: current_user.id, event_id: event.id).id}", method: 'patch' do |f| %>
-      <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
-      <%= f.hidden_field :user_id, value: current_user.id, name: "invite[user_id]" %>
-      <%= f.submit 'Confirm your presence' %>
-    <% end %>
-  <% end %>
-<% end %>
-</section>
+<%= render 'invites/user_invites', user: @user %>
 
-<h2>Attending events (<%= attending_to(@user).count  %>)</h2>
-<% attending_to(@user).each do |event| %>
+<%= render 'events/user_hosted_events', user: @user %>
+
+<h2>Upcoming events (<%= @attending_to.count  %>)</h2>
+<% @attending_to.each do |event| %>
     <hr>
     <p><%= link_to event.title, event_path(event) %></p>
     <p><%= event.date.strftime("%d/%m/%Y") %> - <%= event.location %></p>
     <p><%= event.description %></p>
 <% end %>
 
-<h2>Hosted events (<%= @user.hosted_events.count  %>)</h2>
-<% @user.hosted_events.each do |event| %>
-    <hr>
-    <p><%= link_to event.title, event_path(event) %></p>
-    <p><%= event.date&.strftime("%d/%m/%Y") %> - <%= event.location %></p>
-    <p><%= event.description %></p>
-    <% if @user == current_user %>
-      <%= render 'invites/send_invite_form', type: 'users', users: invitable_users(@user, event.creator), event: event%>
-    <% end %>
-<% end %>
-
-<h2>Past attended events (<%= attended_to(@user).count  %>)</h2>
-<% attended_to(@user).each do |event| %>
+<h2>Previoulsy Attendented events (<%= @attended_to.count  %>)</h2>
+<% @attended_to.each do |event| %>
     <hr>
     <p><%= link_to event.title, event_path(event) %></p>
     <p><%= event.date.strftime("%d/%m/%Y") %> - <%= event.location %></p>

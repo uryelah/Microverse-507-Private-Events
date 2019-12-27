@@ -1,0 +1,12 @@
+<section class="hosted-events">
+  <h2>Hosted events (<%= @hosted_events.count  %>)</h2>
+  <% @hosted_events.each_with_index do |event, i| %>
+    <hr>
+    <p><%= link_to event.title, event_path(event) %></p>
+    <p><%= event.date&.strftime("%d/%m/%Y") %> - <%= event.location %></p>
+    <p><%= event.description %></p>
+    <% if @is_current_user %>
+      <%= render 'invites/send_invite_form', type: 'users', users: @invitables[i], event: event%>
+    <% end %>
+  <% end %>
+</section>

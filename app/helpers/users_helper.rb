@@ -1,19 +1,17 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  def attending_to(user)
-    Event.upcoming_events.my_ivt_status(true, user)
+  def user_invite_form(user)
+    return unless current_user != user
+
+    render 'invites/send_invite_form', type: 'events', user: @user, events: current_user.hosted_events
   end
 
-  def invited_to(user)
-    Event.upcoming_events.my_ivt_status(false, user)
-  end
-
-  def attended_to(user)
-    Event.prev_events.my_ivt_status(true, user)
-  end
-
-  def invitable_users(user, host)
-    User.all_but(user, host)
+  def user_header(user)
+    if current_user != user
+      "#{user.name}'s page".html_safe
+    else
+      'My page'.html_safe
+    end
   end
 end

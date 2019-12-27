@@ -21,4 +21,3 @@ class User < ApplicationRecord
     User.where('id != ? AND id != ?', user.id, host.id)
   end
 end
-# attended_event.exists?(event.id)
