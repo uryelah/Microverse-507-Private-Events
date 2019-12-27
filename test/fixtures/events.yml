@@ -5,11 +5,11 @@ one:
   location: MyString
   date: 2019-12-23 12:37:10
   description: MyText
-  user: one
+  creator: one
 
 two:
   title: MyString
   location: MyString
   date: 2019-12-23 12:37:10
   description: MyText
-  user: two
+  creator: two

@@ -1,20 +1,18 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
   test 'should get new' do
-    get sessions_new_url
+    get login_url
     assert_response :success
   end
 
-  test 'should get create' do
-    get sessions_create_url
+  test 'should post login' do
+    post login_url, params: { session: { name: 'test1', email: 'test1@mail.com' } }, xhr: true
     assert_response :success
   end
 
-  test 'should get destroy' do
-    get sessions_destroy_url
+  test 'should delete logout' do
+    delete logout_url, xhr: true
     assert_response :success
   end
 end

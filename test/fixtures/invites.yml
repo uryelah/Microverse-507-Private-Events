@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
+  user: two
   event: one
   status: false
 
 two:
-  user: two
+  user: one
   event: two
   status: false
