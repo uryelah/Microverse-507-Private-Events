@@ -31,6 +31,7 @@ class EventsController < ApplicationController
     @events = Event.all
     @upcoming = Event.upcoming_events
     @previous = Event.prev_events
+    @upcoming_invites = current_user_invited(@upcoming)
   end
 
   private
@@ -45,5 +46,18 @@ class EventsController < ApplicationController
 
   def any_invitables(current_user, event_creator)
     User.all_but(current_user, event_creator)
+  end
+
+  def current_user_invited(events)
+    invited_arr = []
+    events.each do |event|
+      pending_invite = Invite.find_invite(current_user.id, event.id, false)
+      if pending_invite # rubocop :disable Style/ConditionalAssignment
+        invited_arr << true
+      else
+        invited_arr << false
+      end
+    end
+    invited_arr
   end
 end

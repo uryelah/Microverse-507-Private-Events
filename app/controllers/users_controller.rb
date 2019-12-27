@@ -48,6 +48,8 @@ class UsersController < ApplicationController
 
   def invitables(events)
     invitable_arr = []
+    return invitable_arr if events.empty?
+
     events.each do |event|
       invitable_arr << invitable_users(current_user, event.creator)
     end

@@ -3,24 +3,12 @@
 
 <p>email: <%= @user.email %></p>
 
-<%= render 'invites/user_invites', user: @user %>
+<%= render 'user_invites', user: @user %>
 
-<%= render 'events/user_hosted_events', user: @user %>
+<%= render 'user_hosted_events', user: @user %>
 
-<h2>Upcoming events (<%= @attending_to.count  %>)</h2>
-<% @attending_to.each do |event| %>
-    <hr>
-    <p><%= link_to event.title, event_path(event) %></p>
-    <p><%= event.date.strftime("%d/%m/%Y") %> - <%= event.location %></p>
-    <p><%= event.description %></p>
-<% end %>
+<%= render 'user_upcoming_events', user: @user %>
 
-<h2>Previoulsy Attendented events (<%= @attended_to.count  %>)</h2>
-<% @attended_to.each do |event| %>
-    <hr>
-    <p><%= link_to event.title, event_path(event) %></p>
-    <p><%= event.date.strftime("%d/%m/%Y") %> - <%= event.location %></p>
-    <p><%= event.description %></p>
-<% end %>
+<%= render 'user_previous_events', user: @user %>
 
 <%= link_to 'Back', events_path %>

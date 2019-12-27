@@ -1,8 +1,3 @@
 <h1>User List</h1>
 
-<% @users.each do |user| %>
-  <% next if user == current_user %>
-  <hr>
-  <p><%= link_to user.name, user_path(user) %></p>
-    <%= render 'invites/send_invite_form', type: 'events', user: user, events: @c_u_events %>
-<% end %>
+<%= users_list(@users, @c_u_events) %> 
