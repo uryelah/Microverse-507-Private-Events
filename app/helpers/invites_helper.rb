@@ -63,7 +63,7 @@ module InvitesHelper
             value=\"uiIklTGTY8/kKdSinTxsV+AgP2GxGM7cahNHO/3lM6VNQEG72XdcHQsUQWz/QbUQej5Wh9E7HpC/SJZrdOtarw==\">
           <input value=\"#{event.id}\" name=\"invite[event_id]\" type=\"hidden\" id=\"invites_event_id\">
           <input value=\"#{user.id}\" name=\"invite[user_id]\" type=\"hidden\" id=\"invites_user_id\">
-          <input type=\"submit\" name=\"commit\" value=\"Confirm your presence\"
+          <input type=\"submit\" name=\"commit\" , id=\"event-#{event.id}\" value=\"Confirm your presence\"
             data-disable-with=\"Confirm your presence\">
           </form>".html_safe
         else

@@ -42,9 +42,12 @@ end
 group :development, :test do
   # Capybara, the library that allows us to interact with the browser using Ruby
   gem 'capybara'
+  # Factory bot for creating fixures
+  gem 'factory_bot_rails'
   # The RSpec testing framework
   gem 'rspec-rails'
 
+  gem 'show_me_the_cookies'
   # The following two gems aid with the nuts and bolts
   # of interacting with the browser.
   gem 'webdrivers', '~> 3.0'

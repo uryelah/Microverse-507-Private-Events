@@ -2,5 +2,5 @@
   <%= f.hidden_field :method, name: "_method", value: "patch" %>
   <%= f.hidden_field :event_id, value: event.id, name: "invite[event_id]" %>
   <%= f.hidden_field :user_id, value: current_user.id, name: "invite[user_id]" %>
-  <%= f.submit 'Confirm your presence' %>
+  <%= f.submit 'Confirm your presence', id: "event-#{event.id}" %>
 <% end %>

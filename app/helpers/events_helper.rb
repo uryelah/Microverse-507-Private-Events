@@ -42,10 +42,12 @@ module EventsHelper
       content_tag(:h2, pluralize(confirmed_attendees.count, 'users') + ' attended this event') +
         attendee_list(confirmed_attendees)
     else
-      content_tag(:h2, 'Attending users(' + confirmed_attendees.count.to_s + ')') +
+      content_tag(:section, (
+        content_tag(:h2, 'Attending users(' + confirmed_attendees.count.to_s + ')') +
         attendee_list(confirmed_attendees) +
         content_tag(:h2, 'Invited users(' + invited_attendees.count.to_s + ')') +
         attendee_list(invited_attendees)
+      ), id: 'attending')
     end
   end
 

@@ -4,7 +4,7 @@
     <li class="nav-li">Current User: <%= link_to current_user.name, user_path(current_user) %></li>
     <li class="nav-li"><%= link_to 'All Users', users_path %></li>
     <li class="nav-li nav-center"><%= link_to 'All Events', events_path %></li>
-    <li class="nav-li"><%= link_to 'Create a Event', new_event_path %></li>
+    <li class="nav-li"><%= link_to 'Create Event', new_event_path %></li>
     <li class="nav-li nav-last"><%= link_to 'Sign-off', logout_path, method: :delete %></li>
   <% else %>
     <li class="nav-li nav-last"><%= link_to 'Sign-in', login_path %></li>
