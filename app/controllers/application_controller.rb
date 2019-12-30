@@ -12,7 +12,12 @@ class ApplicationController < ActionController::Base
   end
 
   def retrive_user_cookie
-    return User.find(cookies[:signed_user]) if cookies[:signed_user]
+    begin
+      user = User.find(cookies[:signed_user])
+    rescue ActiveRecord::RecordNotFound
+      cookies.delete(:signed_user)
+    end
+    return User.find(cookies[:signed_user]) if user && cookies[:signed_user]
   end
 
   def current_user
