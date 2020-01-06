@@ -9,6 +9,7 @@ class Event < ApplicationRecord
   validates :description, presence: true
   validates :location, presence: true
   validates :date, presence: true
+  validate :date_check
 
   # scopes
   scope :future, ->(time) { where('date > ?', time) }
@@ -34,5 +35,11 @@ class Event < ApplicationRecord
 
   def self.attended_to(user)
     Event.prev_events.my_ivt_status(true, user)
+  end
+
+  private
+
+  def date_check
+    errors.add(:date, 'Cannot send envite to expired event') if date < Time.current
   end
 end

@@ -15,7 +15,8 @@ class EventsController < ApplicationController
       flash[:success] = 'Event successfully created'
       redirect_to @event
     else
-      flash.now[:error] = 'Error saving new event :-('
+      flash.now[:error] = "Error saving new event: #{@event.errors.full_messages} :-("
+
       render 'new'
     end
   end
