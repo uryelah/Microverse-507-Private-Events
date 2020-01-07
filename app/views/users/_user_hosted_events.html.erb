@@ -1,0 +1,4 @@
+<section class="hosted-events">
+  <h2>Created events (<%= @hosted_events.count  %>)</h2>
+  <%= event_list(@hosted_events, @is_current_user, @invitables) %>
+</section>

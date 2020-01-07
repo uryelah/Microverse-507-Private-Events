@@ -1,0 +1,45 @@
+// Place all the styles related to the Sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.auth-form {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 800px;
+    width: 50%;
+
+    input {
+        border: 1px solid #c3c3c3;
+    }
+
+    fieldset {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 20px 50px;
+        width: 100%;
+        border-bottom: 2px solid #c3c3c3;
+    }
+      
+    [type='submit'] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        background-color: #c3c3c3;
+        border: 2px solid #c3c3c3;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.25rem;
+        transition: 0.3s ease-in;
+
+        &:hover {
+            background-color: #515151;
+            border-color: #515151;
+        }
+    }
+}

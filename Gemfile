@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -21,7 +23,6 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -30,7 +31,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -38,13 +39,19 @@ group :development do
   gem 'web-console', '>= 3.3.0'
 end
 
-group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
+group :development, :test do
+  # Capybara, the library that allows us to interact with the browser using Ruby
+  gem 'capybara'
+  # Factory bot for creating fixures
+  gem 'factory_bot_rails'
+  # The RSpec testing framework
+  gem 'rspec-rails'
+
+  gem 'show_me_the_cookies'
+  # The following two gems aid with the nuts and bolts
+  # of interacting with the browser.
+  gem 'webdrivers', '~> 3.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

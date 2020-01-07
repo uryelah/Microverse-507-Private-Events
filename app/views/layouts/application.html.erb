@@ -10,6 +10,13 @@
   </head>
 
   <body>
+    <%= render '/layouts/nav' %>
+    <% flash.each do |key, value| %>
+    <p>
+      <%= value %>
+    </p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

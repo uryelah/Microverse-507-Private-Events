@@ -1,0 +1,16 @@
+<h1>Sign Up</h1>
+
+<%= form_for :user, html: { class: 'auth-form' }, url: '/users' do |f| %>
+  <fieldset>
+    <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    </div>
+
+    <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    </div>
+  </fieldset>
+  <%= f.submit 'Sign up' %>
+<% end %>

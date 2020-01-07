@@ -1,0 +1,12 @@
+<h1>All Events</h1>
+<%= create_event_prompt(@upcoming, @previous) %>
+
+<section class='upcoming-events'>
+  <h2>Upcoming events(<%= @upcoming.count %>):</h2>
+  <%=  events_list(@upcoming, @upcoming_invites) %>
+</section>
+
+<section class='previous-events'>
+  <h2>Previous events(<%= @previous.count %>):</h2>
+  <%=  events_list(@previous) %>
+</section>

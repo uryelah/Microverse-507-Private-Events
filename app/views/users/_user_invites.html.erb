@@ -1,0 +1,4 @@
+<section class="invites">
+<h2>Invites (<%= @invited_to.count  %>)</h2>
+<%=user_invites(@user, @invited_to, @is_current_user, @invites)%>
+</section>

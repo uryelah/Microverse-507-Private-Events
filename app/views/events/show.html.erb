@@ -1,0 +1,15 @@
+<h1><%= @event.title %> - event page</h1>
+
+<%= confirm_or_cancel_presence(@event, @current_user_invited, @current_user_attending) %>
+
+<%= invite_if_attending(@event, @host, @current_user_attending, @users) %>
+
+<p>Hosted by: <%= link_to @host.name, user_path(@host) %></p>
+
+<p><%= @event.description %></p>
+<p>Location: <%= @event.location %></p>
+<p>Date: <%= @event.date&.strftime("%d/%m/%Y") %></p>
+
+<%= event_attendees(@event, @confirmed_attendees, @invited_attendees) %>
+
+<%= link_to 'Back', events_path %>

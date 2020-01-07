@@ -1,0 +1,14 @@
+<h1><%= user_header(@user) %></h1>
+<%= user_invite_form(@user) %>
+
+<p>email: <%= @user.email %></p>
+
+<%= render 'user_invites', user: @user %>
+
+<%= render 'user_hosted_events', user: @user %>
+
+<%= render 'user_upcoming_events', user: @user %>
+
+<%= render 'user_previous_events', user: @user %>
+
+<%= link_to 'Back', events_path %>

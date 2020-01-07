@@ -1,0 +1,17 @@
+<h1>Login</h1>
+
+<%= form_for :session, html: { class: 'auth-form' }, url: login_path do |f| %>
+  <fieldset>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </fieldset>
+
+  <%= f.submit 'Sign in' %>
+
+  <label>
+    Not signed up? <%= link_to 'Signup here!', new_user_path %>
+  </label>
+<% end %>
