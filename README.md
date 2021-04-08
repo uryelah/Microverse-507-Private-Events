@@ -16,6 +16,7 @@ This is an events site project, similar to Eventbrite, done with ruby on rails w
 - Cancel your attendance to an event to destroy your invitation
 - An event invite cannot be sent to its creator
 - A user cannot send an invite to an event held past the current time
+- Edit linters configuration
 
 <br />
   </p>
